@@ -9,5 +9,7 @@ npx hardhat help
 npx hardhat test
 REPORT_GAS=true npx hardhat test - changed by Muhammad Ali
 npx hardhat node
+npx hardhat test // this is gonna be fast.
+REPORT_GAS=true npx hardhat test
+npx hardhat run
 npx hardhat run scripts/deploy.js
-```
