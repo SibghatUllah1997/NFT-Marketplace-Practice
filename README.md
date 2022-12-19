@@ -6,7 +6,7 @@ Try running some of the following tasks:
 
 ```shell
 npx hardhat help
-npx hardhat test
+npx hardhat test // this is gonna be fast.
 REPORT_GAS=true npx hardhat test
 npx hardhat run
 npx hardhat run scripts/deploy.js
