@@ -15,14 +15,20 @@ contract Collection is ERC721Enumerable, Ownable {
 
     TokenInfo[] public AllowedCrypto;
 
+    struct NFTInfo {
+        string URL;
+        uint256 supply;
+        address _owner;
+    }
+
+    mapping(uint256 => NFTInfo) NFTs;
+
     using Strings for uint256;
     string public baseURI;
     string public baseExtension = ".json";
-    uint256 public maxSupply = 1000;
-    uint256 public maxMintAmount = 5;
     bool public paused = false;
 
-    constructor() ERC721("Net2Dev NFT Collection", "N2D") {}
+    constructor() ERC721("HyfaTech NFT Collection", "HFT") {}
 
     function addCurrency(IERC20 _paytoken, uint256 _costvalue)
         public
@@ -34,10 +40,20 @@ contract Collection is ERC721Enumerable, Ownable {
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
-        return "ipfs://EE5MmqVp5MmqVp7ZRMBBizicVh9ficVh9fjUofWicVh9f/";
+        return "https://gateway.pinata.cloud/ipfs/";
     }
 
-    function mint(
+    function addNFT(
+        uint256 _id,
+        string memory _URL,
+        uint256 _supply,
+        address _owner
+    ) public onlyOwner {
+        NFTs[_id] = NFTInfo(_URL, _supply, _owner);
+    }
+
+    function buyNFT(
+        uint256 _id,
         address _to,
         uint256 _mintAmount,
         uint256 _pid
@@ -47,11 +63,9 @@ contract Collection is ERC721Enumerable, Ownable {
         paytoken = tokens.paytoken;
         uint256 cost;
         cost = tokens.costvalue;
-        uint256 supply = totalSupply();
         require(!paused);
-        require(_mintAmount > 0);
-        require(_mintAmount <= maxMintAmount);
-        require(supply + _mintAmount <= maxSupply);
+        require(NFTs[_id].supply > 0);
+        require(_mintAmount <= NFTs[_id].supply);
 
         if (msg.sender != owner()) {
             require(
@@ -62,8 +76,10 @@ contract Collection is ERC721Enumerable, Ownable {
 
         for (uint256 i = 1; i <= _mintAmount; i++) {
             paytoken.transferFrom(msg.sender, address(this), cost);
-            _safeMint(_to, supply + i);
+            _safeMint(_to, _id);
         }
+
+        NFTs[_id].supply -= _mintAmount;
     }
 
     function walletOfOwner(address _owner)
@@ -102,12 +118,6 @@ contract Collection is ERC721Enumerable, Ownable {
                     )
                 )
                 : "";
-    }
-
-    // only owner
-
-    function setmaxMintAmount(uint256 _newmaxMintAmount) public onlyOwner {
-        maxMintAmount = _newmaxMintAmount;
     }
 
     function setBaseURI(string memory _newBaseURI) public onlyOwner {
