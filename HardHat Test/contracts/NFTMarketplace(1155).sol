@@ -59,6 +59,7 @@ contract HyfaToken is ERC1155, Ownable {
         listedNfts.push(amount);
     }
 
+//Function to buy NFTs at the price they were listed
     function buyNFT(uint256 tokenId, uint256 amount) public payable {
         require(amount <= NFTs[tokenId].supply, "Not enough supply left");
         require(
