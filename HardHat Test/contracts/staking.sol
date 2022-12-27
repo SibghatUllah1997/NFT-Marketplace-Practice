@@ -25,7 +25,8 @@ contract Staking {
 
     mapping(address => mapping(uint256 => staking)) stakedDetails;
 
-    // This function adds the staker
+    // This function adds the staker-member
+    
     function stakeTokens(
         address _staker,
         uint256 _amount,
