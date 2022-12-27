@@ -84,7 +84,7 @@ contract NftMarketplace {
         NFTs[nftAddress].supply -= mintAmount;
     }
 
-    
+    //get information about the NFTs listed
 
     function getNFTInfo(address nftAddress)
         external
