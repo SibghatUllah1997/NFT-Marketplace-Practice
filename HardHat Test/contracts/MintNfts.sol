@@ -17,6 +17,7 @@ contract NFTMintingListing is ERC1155, Ownable {
         baseURI = _URI;
     }
 
+
     //This function updates the pre-fetched URI
     function updateURI(string memory uri) public {
         baseURI = uri;
@@ -47,6 +48,7 @@ contract NFTMintingListing is ERC1155, Ownable {
         require(price > 0, "Price should be greater than 0");
 
         NFTs[totalNfts] = NFTInfo(_URL, nftAddress, _supply, price, _owner);
+
         _mint(msg.sender, totalNfts, _supply, "");
 
         emit NFTMinted(totalNfts, _supply, price);

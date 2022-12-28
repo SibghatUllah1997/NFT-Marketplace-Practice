@@ -17,7 +17,8 @@ contract NFTMarketplace is ERC1155 {
     }
 
     function buyNFT(uint256 tokenId, uint256 amount) public payable {
-        require(amount <= NFTMintingListing.NFTs[tokenId].supply, "Not enough supply left");
+        require(amount <= NFTMintingListing.NFTs[tokenId].supply, 
+        "Not enough supply left");
         require(
             NFt.listedNFTs[tokenId][amount] == true,
             "The token you're trying to buy is not listed"
