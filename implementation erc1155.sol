@@ -54,7 +54,7 @@ contract NftMarketplace is ERC1155, Ownable {
     // ) public Owner{
         // erc1155 NFTInfo = IERC20(paymentAddress);
         // address owner = nft.ownerOf(tokenId);
-        if (spender != owner) {
+         (spender != owner) {
             return Owner();
         }
         _;
