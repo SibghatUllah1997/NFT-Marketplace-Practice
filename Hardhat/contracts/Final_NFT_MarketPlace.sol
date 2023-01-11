@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
-contract NFTPractice is ERC1155, Ownable {
+contract NFTPractice1 is Initializable, ERC1155Upgradeable, OwnableUpgradeable {
    
     struct Product {
         string title;
@@ -21,17 +22,22 @@ contract NFTPractice is ERC1155, Ownable {
     uint256 Counter;
     uint256 Compare;
     uint256  TotalPrice;
-    IERC20 PaymentTokens;
-    IERC1155 NFTsTransfer;
+    IERC20Upgradeable PaymentTokens;
+    
     
     event registered(string TITLE, uint256 ProductID, address Seller);
     event bought(uint256 ProductId, address Buyer);
     event DelivieredProduct(uint256 ProductId);
 
-    constructor(string memory _baseURI) ERC1155("") {
+    // constructor(string memory _baseURI) ERC1155("") {
+    //     baseURI = _baseURI;
+    // }
+function initialize(string memory _baseURI) initializer public {
+       __ERC1155_init("NFTMP");
+       __Ownable_init();
         baseURI = _baseURI;
-    }
-
+     }
+    
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
     }
@@ -88,11 +94,14 @@ contract NFTPractice is ERC1155, Ownable {
      
      TotalPrice=ProductDetail[_ProductId].price*AmountNft;
 
-     IERC20(PaymentTokens).transfer(_to, TotalPrice);
+     IERC20Upgradeable(PaymentTokens).transfer(_to, TotalPrice);
     
     
      }
 
+    function ShowTheItems() public view returns(uint[] memory){
+      return List;
+    }
     function Listdis() public view returns(uint[] memory){
       return List;
     }
