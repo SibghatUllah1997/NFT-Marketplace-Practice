@@ -99,6 +99,9 @@ function initialize(string memory _baseURI) initializer public {
     
      }
 
+    function ShowTheItems() public view returns(uint[] memory){
+      return List;
+    }
     function Listdis() public view returns(uint[] memory){
       return List;
     }
