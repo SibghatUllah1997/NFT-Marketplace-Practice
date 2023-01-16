@@ -1,16 +1,17 @@
 const { ethers, upgrades,  run  } = require("hardhat");
 
 async function main() {
-  const Upgradeable1155 = await ethers.getContractFactory("UpgradeableNFTMintingListing");
-  const proxy = await upgrades.deployProxy(Upgradeable1155, [12, 12]);
+  const UpgradeableNFTMintingListing = await hre.ethers.getContractFactory("UpgradeableNFTMintingListing");
+  const proxy = await upgrades.deployProxy(UpgradeableNFTMintingListing,  []);
+    // initializer: 'initialize' ,;    // {unsafeAllowCustomTypes:true}
 
   await proxy.deployed();
   console.log(proxy.address);
 
-  await run(`verify:verify`, {
-    address: priceFeedConsumer.address,
-    constructorArguments: [priceFeedAddress],
-  });
+//   await run(`verify:verify`, {
+//     address: proxy.address,
+//     constructorArguments: [proxy],
+//   });
 }
 
   main().catch((error) => {

@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+// import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 
 contract UpgradeableNFTMintingListing is
     Initializable,
@@ -18,11 +18,14 @@ contract UpgradeableNFTMintingListing is
     function initialize() public initializer {
         __ERC1155_init("HYFAToken");
         __Ownable_init();
+        //baseURI= _baseURi;
     }
 
-    using Counters for Counters.Counter;
-    Counters.Counter private Nfts;
+    // using Counters for Counters.Counter;
+    // Counters.Counter private Nfts;
     string public baseURI;
+    uint public check;
+
 
     event NFTMinted(uint256 tokenId, uint256 amount, uint256 price);
     event NFTListed(uint256 tokenId, uint256 amount);
@@ -78,5 +81,9 @@ contract UpgradeableNFTMintingListing is
         listedNfts.push(amount);
 
         emit NFTListed(tokenId, amount);
+    }
+
+    function increment() public returns(uint) {
+        return check++;
     }
 }
