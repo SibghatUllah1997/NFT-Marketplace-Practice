@@ -1,24 +1,36 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 
-contract NFTMintingListing is ERC1155, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private Nfts;
+contract UpgradeableNFTMintingListing is
+    Initializable,
+    ERC1155Upgradeable,
+    OwnableUpgradeable
+{
+    // constructor() {
+    //     _disableInitializers();
+    // }
+
+    function initialize() public initializer {
+        __ERC1155_init("HYFAToken");
+        __Ownable_init();
+        //baseURI= _baseURi;
+    }
+
+    // using Counters for Counters.Counter;
+    // Counters.Counter private Nfts;
     string public baseURI;
+    uint public check;
+
 
     event NFTMinted(uint256 tokenId, uint256 amount, uint256 price);
     event NFTListed(uint256 tokenId, uint256 amount);
 
-    constructor(string memory _URI) ERC1155("") {
-        baseURI = _URI;
-    }
-
-
-    //This function updates the pre-fetched URI
+    //This function sets the fetched URI
     function updateURI(string memory uri) public {
         baseURI = uri;
     }
@@ -30,7 +42,7 @@ contract NFTMintingListing is ERC1155, Ownable {
         uint256 price;
         address payable _owner;
     }
-    
+
     mapping(uint256 => NFTInfo) public NFTs;
     mapping(uint256 => mapping(uint256 => bool)) public listedNFTs;
     uint256[] listedNfts;
@@ -48,11 +60,14 @@ contract NFTMintingListing is ERC1155, Ownable {
         require(price > 0, "Price should be greater than 0");
 
         NFTs[totalNfts] = NFTInfo(_URL, nftAddress, _supply, price, _owner);
-
         _mint(msg.sender, totalNfts, _supply, "");
 
         emit NFTMinted(totalNfts, _supply, price);
         totalNfts++;
+    }
+
+    function getNFTData(uint256 tokenId) public view returns (NFTInfo memory) {
+        return NFTs[tokenId];
     }
 
     //Users can decide which NFTs to list & in what amount
@@ -66,5 +81,9 @@ contract NFTMintingListing is ERC1155, Ownable {
         listedNfts.push(amount);
 
         emit NFTListed(tokenId, amount);
+    }
+
+    function increment() public returns(uint) {
+        return check++;
     }
 }

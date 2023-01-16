@@ -2,12 +2,12 @@
 
 async function main() {
   // We get the contract to deploy
-  const USDRewards = await ethers.getContractFactory("USDRewards");
+  const SIGNVerify = await ethers.getContractFactory("SIGNVerify");
   console.log("Deploying Contract . . . . ");
-  const usdrewards = await USDRewards.deploy();
+  const signVerify = await SIGNVerify.deploy();
 
-  await usdrewards.deployed();
-  console.log(`ERC20supply Contract deployed to: ${USDRewards.address}`);
+  await signVerify.deployed();
+  console.log(`ERC20supply Contract deployed to: ${SIGNVerify.address}`);
 }
 
 main().catch((error) => {
