@@ -5,7 +5,7 @@ const message = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4";
 `   `
 console.log("version :", web3.version);
 
-const signature = web3.eth.accounts.sign(message, '25d379f64f01bbd3554f1362f59dd8882d11c0299104a338466640d35ed7eda3');
+const signature = web3.eth.accounts.sign(message, '');
 
 console.log("signature :", signature);
 
