@@ -18,7 +18,7 @@
 //     const amount = 999
 //     const message = "Hello World" 
 //     const nonce = 123
-//     const privateKey = "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"
+//     const privateKey = ""
     
 
 //     const sigObj = await web3.eth.accounts.sign(msg, privateKey)
