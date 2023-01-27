@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require('@openzeppelin/hardhat-upgrades');
 
-const privatekey1="3de12ab1e199cd2b0b6a5ff528de1415debb0cfc0b921e5d2b5a78f972fc5785"
+const privatekey1=""
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
     timeout: 40000
   },
   etherscan: {
-    apiKey: "RJ61S4CVJ776QS721JNDPMKXXE6FN9RYIM",
+    apiKey: "",
   },
   
 };
